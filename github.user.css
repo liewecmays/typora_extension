@@ -1,0 +1,267 @@
+/* css変数 */
+html { color: rgb(var(--color-black, 51, 51, 51)); }
+a { color: rgb(var(--color-link, 65, 131, 196)); }
+
+/* 既存スタイルの上書き (Markdown記法との整合性に注意) */
+#write em strong span{
+    color: red;
+    font-style: normal;
+}
+
+mark{
+    background: transparent;
+    color: rgba(var(--color-black, 51, 51, 51), 0.7);
+}
+
+/* すこじゃないやつをいじる */
+* { font-family: "Noto Sans JP", sans-serif; }
+
+#write a { text-decoration: none; }
+
+#write ul li ul:last-of-type,
+#write ul li ol:last-of-type,
+#write ol li ul:last-of-type,
+#write ol li ol:last-of-type{
+    margin-bottom: 0.75rem;
+}
+
+#write ul li, #write ol li{
+    margin-bottom: 0.5rem;
+}
+
+#write ul li:last-of-type, #write ol li:last-of-type{
+    margin-bottom: 0;
+}
+
+#write sup.md-footnote{
+    padding: 2px 2px;
+    background-color: transparent;
+    font-size: 0.75rem;
+    color: rgb(51, 51, 51);
+}
+
+#write li.has-gray-mark::marker{ /* リスト内の場合 */
+    color: rgba(var(--color-black, 51, 51, 51), 0.7);
+}
+
+mjx-container[jax="SVG"]{
+    margin-left: 2.5px;
+    margin-right: 2.5px;
+}
+
+mjx-container[jax="SVG"] > svg a {
+    fill: rgb(var(--color-link, 65, 131, 196)) !important;
+    stroke: rgb(var(--color-link, 65, 131, 196)) !important;
+}
+
+/* 改ページの調整 */
+h1, h2, h3, h4, h5, h6{ page-break-after: avoid; }
+h1+h2, h2+h3, h3+h4, h4+h5, h5+h6{ page-break-before: avoid; }
+
+/* リンク用のアンカー設定 */
+a:empty{ /* 位置を適当にずらす */
+    padding-top: 2rem;
+    margin-top: -2rem;
+    cursor: default;
+}
+span.md-html-inline .md-raw-inline{ display: none; }
+span.md-html-inline.md-expand .md-raw-inline{ display: inline !important; }
+span.md-html-inline a:before{ content: ""; }
+span.md-html-inline a:empty:before{
+	content: "[⚓︎]";
+    color: rgb(var(--color-black, 51, 51, 51));
+    margin: 0 2.5px;
+    filter: none !important;
+}
+span.md-html-inline.md-expand a:empty:before{ content: ""; }
+
+/* 環境 */
+.myenv{
+    padding: 1rem;
+    margin: 1rem 0;
+}
+
+.myenv p.myenv__top{
+    margin: 0;
+}
+
+.myenv-def, .myenv-exm, .myenv-box{
+    border: 3px solid rgba(var(--color-primary, var(--color-black, 51, 51, 51)), 0.25);
+}
+
+.myenv-thm, .myenv-cor, .myenv-lem, .myenv-prop{
+    background-color: rgba(var(--color-primary, var(--color-black, 51, 51, 51)), 0.05);
+}
+
+.myenv-rmk, .myenv-supp{
+    border-left: 2.5px solid rgba(var(--color-primary, var(--color-black, 51, 51, 51)), 0.25);
+    padding: 0.5rem 0 0.5rem 1rem;
+    color:rgba(51, 51, 51, 0.7);
+}
+
+.myenv-side{
+    border-left: 2.5px solid rgba(var(--color-primary, var(--color-black, 51, 51, 51)), 0.25);
+    padding: 0.5rem 0 0.5rem 1rem;
+}
+
+begin-side, end-side{ display: none; }
+begin-box, end-box{ display: none; }
+
+
+/* スライド */
+begin-frame, end-frame{ background-color: red; }
+html.slide .frame{ /* htmlで確認するとき用 */
+    border: 2.5px solid rgba(var(--color-primary, var(--color-black, 51, 51, 51)), 0.25);
+    padding: 0.5rem 0 0.5rem 1rem;
+}
+
+@media print{
+    html.slide, html.slide body{
+        border: none;
+        width: 254mm;
+        height: 190.5mm;
+    }
+    
+    html.slide body.typora-export{ padding:0; }
+    
+    html.slide #write{
+        max-width: auto;
+        width: 100%;
+        margin: 0;
+        padding: 0;
+    }
+
+    html.slide #write > *:not(.frame){
+        display: none;
+    }
+
+    html.slide #write > h1{
+        display: block !important;
+        visibility: hidden;
+        height: 0;
+        width: 0;
+        margin: 0;
+    }
+
+    html.slide .frame{
+        position: relative;
+        width: 100%;
+        font-size: 17.5pt;
+        page-break-after: always;
+        border: none;
+        padding: 0;
+    }
+
+    html.slide .frame > * {
+        padding-left: 60px;
+        padding-right: 60px;
+    }
+
+    html.slide .frame .frame-title{
+        font-size: 30pt;
+        line-height: 2.25;
+        width: 100%;
+        background-color: rgb(var(--color-primary, 51, 51, 51));
+        color: white;
+        padding-left: 30px;
+        padding-right: 30px;
+        margin-top: 0;
+        margin-bottom: 0;
+    }
+    html.slide .frame .frame-title strong{ font-weight: normal; }
+
+    html.slide .frame-content{
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        row-gap: 20px;
+        height: calc(190.5mm - 30pt * 2.25);
+        /* border: 1px solid red; */
+        overflow: hidden;
+    }
+    html.slide .frame-content > *:not(.myenv) {
+        width: 100%;
+        margin-top: 0;
+        margin-bottom: 0;
+    }
+
+    html.slide .frame-footer{
+        width: 100%;
+        text-align: right;
+        position: absolute !important;
+        bottom: 0;
+        margin: 0;
+        font-size: 15px;
+        padding-right: 30px;
+        line-height: 2.5;
+        color: gray;
+    }
+    html.slide .frame.frame-no-pagenum .frame-footer{ display: none; }
+
+    /* 表紙 */
+    html.slide .slide-cover{
+        width: 100%;
+        height: 190.5mm;
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        row-gap: 50px;
+        text-align: center;
+    }
+    html.slide .slide-cover .cover-title{
+        font-size: 30pt;
+        line-height: 1.5;
+        padding: 15px 30px;
+        width: 80%;
+        margin-left: 10%;
+        background-color: rgb(var(--color-primary, 51, 51, 51));
+        color: white;
+    }
+    html.slide .slide-cover .cover-author{
+        width: 100%;
+        text-align: center;
+    }
+    html.slide .slide-cover .cover-date{
+        width: 100%;
+        text-align: center;
+    }
+
+    html.slide .slide-toc{
+        height: 190.5mm;
+    }
+
+    html.slide .slide-toc .slide-toc-list{
+        height: 100%;
+        margin-left: 30px;
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        row-gap: 30px;
+    }
+
+    /* internal link in toc */
+    html.slide .slide-toc .slide-toc-list li a{ color: rgb(var(--color-black, 51, 51, 51)); }
+    
+    /* section toc */
+    html.slide .slide-toc.slide-section-toc h1{ visibility: hidden; }
+    html.slide .slide-toc.slide-section-toc .slide-toc-list{ color: rgba(var(--color-black, 51, 51, 51), 0.5); }
+    html.slide .slide-toc.slide-section-toc .slide-toc-list li a{ color: rgba(var(--color-black, 51, 51, 51), 0.5); }
+    html.slide .slide-toc.slide-section-toc .slide-toc-list li.current-section{ color: rgb(var(--color-black, 51, 51, 51)); }
+    html.slide .slide-toc.slide-section-toc .slide-toc-list li.current-section a{
+        color: rgb(var(--color-black, 51, 51, 51));
+        font-weight: bold;
+    }
+
+    /* bold + blue */
+    html.slide #write em strong span{
+        color: rgb(var(--color-primary, 51, 51, 51));
+        font-style: bold;
+    }
+}
+
+begin-slide, end-slide{ display: none; }
+
+
+/* マクロなどの定義を隠す */
+.defmacro-box{ display: none; }
+begin-defmacro, end-defmacro{ display: none; }
